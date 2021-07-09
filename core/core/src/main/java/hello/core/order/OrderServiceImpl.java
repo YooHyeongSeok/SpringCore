@@ -6,6 +6,9 @@ import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
+
+import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService{
 
@@ -63,5 +66,22 @@ public class OrderServiceImpl implements OrderService{
     //확인용도
     public MemberRepository getMemberRepository(){
         return memberRepository;
+    }
+
+
+    //자동주입 옵션 처리
+    @Autowired(required = false)
+    void setNoBean1(Member member) {
+        System.out.println("setNoBean1 :::" + member);
+    }
+
+    @Autowired
+    void setNoBean2(@Nullable Member member) {
+        System.out.println("setNoBean2 :::" + member);
+    }
+
+    @Autowired
+    void setNoBean3(Optional<Member> member) {
+        System.out.println("setNoBean3 :::" + member);
     }
 }
