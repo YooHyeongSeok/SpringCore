@@ -17,30 +17,15 @@ import java.util.Optional;
 @Component
 public class OrderServiceImpl implements OrderService{
 
-    /*
-    * 의존주입 충돌날 경우 필드 주입
-    * 필드명으로 주입 가능
-        @Autowired
-        private MemberRepository memberRepository;
-        @Autowired
-        private  DiscountPolicy rateDiscountPolicy;
-    * */
-
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository
-            ,@Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(
+            MemberRepository memberRepository
+            , DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
-    }
-    /*
-        수정자 자동주입 예시
-    */
-    @Autowired
-    public DiscountPolicy setDiscountPolicy(@Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
-        return discountPolicy;
     }
 
     @Override
