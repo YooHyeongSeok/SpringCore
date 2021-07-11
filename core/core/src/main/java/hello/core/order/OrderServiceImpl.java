@@ -8,15 +8,40 @@ import hello.core.member.MemoryMemberRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
+@Component
 public class OrderServiceImpl implements OrderService{
+
+    /*
+    * 의존주입 충돌날 경우 필드 주입
+    * 필드명으로 주입 가능
+        @Autowired
+        private MemberRepository memberRepository;
+        @Autowired
+        private  DiscountPolicy rateDiscountPolicy;
+    * */
 
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
+
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository
+            ,@Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+    /*
+        수정자 자동주입 예시
+    */
+    @Autowired
+    public DiscountPolicy setDiscountPolicy(@Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+        return discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
