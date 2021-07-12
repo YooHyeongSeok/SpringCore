@@ -24,6 +24,7 @@ public class BeanLifeCycleTest {
         public NetworkClient networkClient() {
             NetworkClient networkClient = new NetworkClient();
             networkClient.setUrl("http://hello-spring.core");
+            System.out.println("객체를 생성 후 호출 테스트");
             return networkClient;
         }
     }
